@@ -3,8 +3,6 @@ import QuizQuestion from './QuizQuestion.js'
 import QuizEnd from './QuizEnd.js'
 let quizData = require('./quiz_data.json');
 
-const isQuizEnd = false;
-
 class Quiz extends Component {
     
     constructor(props){
@@ -15,8 +13,14 @@ class Quiz extends Component {
     render(){
         const isQuizEnd = ((this.state.quiz_position -1) === quizData.quiz_questions.length);
         return <div>
-            {isQuizEnd ? <QuizEnd /> : <QuizQuestion quiz_question={quizData.quiz_questions[this.state.quiz_position -1]}/>}
-            </div>;
+            {isQuizEnd ? <QuizEnd /> : <QuizQuestion quiz_question={quizData.quiz_questions[this.state.quiz_position -1]} showNextQuestionHandler={this.showNextQuestion.bind(this)}/>}
+            </div>
+    }
+
+    showNextQuestion(){
+        this.setState((state) => {
+            return { quiz_position: state.quiz_position + 1 }
+        })
     }
 }
 
